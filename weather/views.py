@@ -11,7 +11,13 @@ def index(request):
 	weather_data=[]
 	if request.method=='POST':
 		form=CityForm(request.POST)
-		form.save()
+		name=request.POST['name']
+		if City.objects.filter(name=name).exists():
+			print('Already exists')
+		else:
+			# if (requests.get(url.format(name)).json()).status_code ==200
+			if (requests.get(url.format(name))).status_code==200:
+				form.save()
 	form=CityForm()
 	cities=City.objects.all()
 	for city in cities:
